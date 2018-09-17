@@ -5,11 +5,13 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use function md5;
 
 class User extends Authenticatable
 {
     use Notifiable, HasApiTokens;
 
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -29,4 +31,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function avatar()
+    {
+        return 'https://www.gravatar.com/avatar/' . md5($this->email) . '?s=45&d=mm';
+    }
 }
