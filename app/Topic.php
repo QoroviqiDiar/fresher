@@ -22,4 +22,11 @@ class Topic extends Model
     {
         return $this->hasMany(Post::class)->oldestFirst();
     }
+
+
+    // Change the column for route model binding
+//    public function getRouteKeyName()
+//    {
+//        return 'slug';
+//    }
 }
