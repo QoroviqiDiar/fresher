@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TopicController;
 use Illuminate\Http\Request;
 
 /*
@@ -20,5 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/register', 'RegisterController@register');
 
 Route::group(['prefix' => 'topics'], function () {
+    Route::get('/', 'TopicController@index');
     Route::post('/', 'TopicController@store')->middleware('auth:api');
 });
