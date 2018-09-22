@@ -11,6 +11,7 @@ use App\Transformers\TopicTransformer;
 use function fractal;
 use Illuminate\Http\Request;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
+use function response;
 
 class TopicController extends Controller
 {
@@ -70,5 +71,14 @@ class TopicController extends Controller
             ->parseIncludes(['user', 'posts.user'])
             ->transformWith(new TopicTransformer)
             ->toArray();
+    }
+
+    public function destroy(Topic $topic)
+    {
+        $this->authorize('destroy', $topic);
+
+        $topic->delete();
+
+        return response(null, 204);
     }
 }
