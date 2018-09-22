@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTopicRequest;
+use App\Http\Requests\UpdateTopicRequest;
 use App\Post;
 use App\Topic;
 use App\Traits\Orderable;
@@ -55,5 +56,17 @@ class TopicController extends Controller
             ->transformWith(new TopicTransformer)
             ->toArray();
 
+    }
+
+    public function update(UpdateTopicRequest $request, Topic $topic)
+    {
+        $topic->title = $request->title;
+        $topic->save();
+
+        return fractal()
+            ->item($topic)
+            ->parseIncludes(['user', 'posts.user'])
+            ->transformWith(new TopicTransformer)
+            ->toArray();
     }
 }
