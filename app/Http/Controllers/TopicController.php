@@ -60,6 +60,8 @@ class TopicController extends Controller
 
     public function update(UpdateTopicRequest $request, Topic $topic)
     {
+        $this->authorize('update', $topic);
+
         $topic->title = $request->title;
         $topic->save();
 
