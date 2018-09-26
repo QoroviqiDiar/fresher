@@ -10,6 +10,8 @@ use App\Topic;
 use App\Transformers\PostTransformer;
 use function fractal;
 use Illuminate\Http\Request;
+use function resolve;
+use function response;
 
 class PostController extends Controller
 {
@@ -42,5 +44,14 @@ class PostController extends Controller
             ->parseIncludes(['user'])
             ->transformWith(new PostTransformer)
             ->toArray();
+    }
+
+    public function destroy(Topic $topic, Post $post)
+    {
+        $this->authorize('destroy', $post);
+
+        $post->delete();
+
+        return response(null, 204);
     }
 }
