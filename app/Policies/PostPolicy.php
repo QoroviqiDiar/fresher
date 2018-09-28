@@ -21,5 +21,9 @@ class PostPolicy
     }
 
 
+    public function like(User $user, Post $post)
+    {
+        return !$user->ownsPost($post);
+    }
 }
 
